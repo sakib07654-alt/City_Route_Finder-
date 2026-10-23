@@ -1,0 +1,405 @@
+
+/* ---------------- GENERAL ---------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 20px;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #243247;
+    background: #f3f6fb;
+    line-height: 1.55;
+}
+
+
+/* ---------------- HEADER ---------------- */
+
+.header {
+    background: #ffffff;
+    min-height: 68px;
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e0e7f0;
+}
+
+.brand {
+    color: #1769d2;
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: 750;
+}
+
+.header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header nav a {
+    text-decoration: none;
+    color: #34445c;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.header nav a:hover {
+    color: #1769d2;
+}
+
+
+/* ---------------- MAIN CONTAINER ---------------- */
+
+.container {
+    width: min(1000px, 92%);
+    margin: 24px auto;
+}
+
+
+/* ---------------- HERO ---------------- */
+
+.hero {
+    padding: 30px 22px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    background: linear-gradient(130deg, #1758a9, #3989e8);
+}
+
+.hero h1 {
+    margin: 0 0 8px;
+    font-size: clamp(25px, 4vw, 34px);
+}
+
+.hero p {
+    margin: 0;
+}
+
+
+/* ---------------- CARDS ---------------- */
+
+.card {
+    padding: 23px;
+    margin-bottom: 20px;
+    background: #ffffff;
+    border: 1px solid #e0e8f2;
+    border-radius: 11px;
+    box-shadow: 0 3px 12px rgba(28, 54, 88, 0.045);
+}
+
+.card h2 {
+    margin: 0 0 18px;
+    color: #1d3557;
+    font-size: 21px;
+}
+
+
+/* ---------------- FORMS ---------------- */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 650;
+    color: #34445c;
+}
+
+input,
+select {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 12px;
+    border: 1px solid #ced9e8;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #26364a;
+    font: inherit;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #b8d5ff;
+    border-color: #1769d2;
+}
+
+
+/* ---------------- BUTTONS ---------------- */
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.button {
+    min-height: 42px;
+    padding: 10px 17px;
+    border: 0;
+    border-radius: 7px;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.button-primary {
+    color: #ffffff;
+    background: #1769d2;
+}
+
+.button-primary:hover {
+    background: #1055ad;
+}
+
+.button-primary:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.button-light {
+    color: #175cae;
+    background: #eaf2ff;
+    border: 1px solid #d1e2fb;
+}
+
+.button-light:hover {
+    background: #dceaff;
+}
+
+#findBtn {
+    flex: 1;
+}
+
+
+/* ---------------- RESULT MESSAGE ---------------- */
+
+.notice {
+    padding: 13px 15px;
+    margin-bottom: 18px;
+    border: 1px solid #d9e7fa;
+    border-radius: 8px;
+    background: #f0f6ff;
+    color: #31547e;
+    overflow-wrap: anywhere;
+}
+
+.notice.success {
+    color: #176b43;
+    background: #edfbf3;
+    border-color: #bfe9d0;
+}
+
+.notice.error {
+    color: #a52a25;
+    background: #fff1f0;
+    border-color: #f6ceca;
+}
+
+
+/* ---------------- STATISTICS ---------------- */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.stat {
+    min-width: 0;
+    padding: 17px 10px;
+    text-align: center;
+    background: #f9fbfe;
+    border: 1px solid #e1e9f3;
+    border-radius: 9px;
+}
+
+.stat span {
+    font-size: 24px;
+}
+
+.stat p {
+    margin: 5px 0;
+    color: #6b7c91;
+    font-size: 13px;
+}
+
+.stat strong {
+    color: #1769d2;
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------- ROUTE PATH ---------------- */
+
+.path-box {
+    margin-top: 16px;
+    padding: 15px;
+    background: #f8faff;
+    border: 1px solid #e1e9f3;
+    border-radius: 8px;
+}
+
+.path-box h3 {
+    margin: 0 0 7px;
+    font-size: 16px;
+}
+
+#pathValue {
+    margin: 0;
+    color: #1769d2;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------- MAP ---------------- */
+
+.muted,
+.map-note {
+    color: #718096;
+    font-size: 13px;
+}
+
+.muted {
+    margin: -9px 0 15px;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    min-height: 300px;
+    background: #e8eef5;
+    border: 1px solid #d4deea;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.map-note {
+    margin: 8px 0 0;
+}
+
+
+/* ---------------- ADMIN PANEL ---------------- */
+
+#adminPanel[hidden] {
+    display: none !important;
+}
+
+#adminPanel {
+    margin-top: 17px;
+}
+
+.admin-section {
+    margin-top: 16px;
+    padding: 18px;
+    background: #f8faff;
+    border: 1px solid #e1e9f3;
+    border-radius: 9px;
+}
+
+.admin-section h3 {
+    margin: 0 0 15px;
+    font-size: 17px;
+    color: #1d3557;
+}
+
+.admin-section .button {
+    min-width: 140px;
+}
+
+
+/* ---------------- ABOUT PROJECT ---------------- */
+
+.about p {
+    margin-bottom: 0;
+    color: #526277;
+}
+
+
+/* ---------------- FOOTER ---------------- */
+
+.footer {
+    padding: 20px 12px;
+    text-align: center;
+    color: #ffffff;
+    background: #1d3557;
+    font-size: 13px;
+}
+
+.footer p {
+    margin: 3px 0;
+}
+
+
+/* ---------------- MOBILE RESPONSIVE ---------------- */
+
+@media (max-width: 650px) {
+
+    .header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .header nav {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .container {
+        width: 94%;
+        margin-top: 16px;
+    }
+
+    .hero {
+        padding: 24px 15px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+    .form-grid,
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .stat {
+        margin-bottom: 10px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    #findBtn {
+        flex: auto;
+    }
+
+    #map {
+        height: 330px;
+    }
+}
+
