@@ -1,4 +1,3 @@
-
 import heapq
 import math
 import sqlite3
@@ -23,9 +22,7 @@ def get_connection():
 # ---------------- DATABASE INITIALIZATION ----------------
 
 def init_db():
-
     with get_connection() as conn:
-
         conn.execute("""
             CREATE TABLE IF NOT EXISTS cities (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,7 +46,6 @@ def init_db():
         ).fetchone()[0]
 
         if city_count == 0:
-
             cities = [
                 ("Delhi", 28.6139, 77.2090),
                 ("Jaipur", 26.9124, 75.7873),
@@ -70,7 +66,6 @@ def init_db():
         ).fetchone()[0]
 
         if route_count == 0:
-
             routes = [
                 ("Delhi", "Agra", 240),
                 ("Agra", "Delhi", 240),
@@ -94,12 +89,14 @@ def init_db():
             )
 
 
+# Production / Gunicorn execution level database auto-initialization
+init_db()
+
+
 # ---------------- GRAPH DATA ----------------
 
 def get_graph_data():
-
     with get_connection() as conn:
-
         city_rows = conn.execute(
             "SELECT name, lat, lng FROM cities"
         ).fetchall()
@@ -119,7 +116,6 @@ def get_graph_data():
     graph = {}
 
     for row in route_rows:
-
         source = row["source"]
         destination = row["destination"]
         distance = float(row["distance"])
@@ -134,12 +130,10 @@ def get_graph_data():
 # ---------------- DIJKSTRA ALGORITHM ----------------
 
 def dijkstra(graph, start, goal):
-
     priority_queue = [(0, start, [start])]
     best_distance = {}
 
     while priority_queue:
-
         cost, current_city, path = heapq.heappop(
             priority_queue
         )
@@ -158,9 +152,7 @@ def dijkstra(graph, start, goal):
         for next_city, distance in graph.get(
             current_city, []
         ):
-
             if next_city not in path:
-
                 new_cost = cost + distance
 
                 heapq.heappush(
@@ -179,7 +171,6 @@ def dijkstra(graph, start, goal):
 
 @app.route("/")
 def home():
-
     _, cities = get_graph_data()
 
     return render_template(
@@ -192,7 +183,6 @@ def home():
 
 @app.route("/get_route", methods=["POST"])
 def get_route():
-
     data = request.get_json(silent=True) or {}
 
     source = data.get("source")
@@ -200,13 +190,11 @@ def get_route():
     traffic = data.get("traffic", "normal")
 
     if not source or not destination:
-
         return jsonify({
             "error": "Please select both cities."
         }), 400
 
     if source == destination:
-
         return jsonify({
             "error": "Start and destination cannot be the same."
         }), 400
@@ -217,7 +205,6 @@ def get_route():
     graph, cities = get_graph_data()
 
     if source not in cities or destination not in cities:
-
         return jsonify({
             "error": "Selected city was not found."
         }), 400
@@ -229,7 +216,6 @@ def get_route():
     )
 
     if math.isinf(distance) or not path:
-
         return jsonify({
             "error": "No route found between these cities."
         }), 404
@@ -241,8 +227,6 @@ def get_route():
         ]
         for city in path
     ]
-
-    # Average speed assumption: 60 km/h
 
     traffic_factor = {
         "normal": 1.0,
@@ -277,7 +261,6 @@ def get_route():
 
 @app.route("/add_city", methods=["POST"])
 def add_city():
-
     data = request.get_json(silent=True) or {}
 
     name = str(data.get("name", "")).strip()
@@ -285,41 +268,33 @@ def add_city():
     try:
         lat = float(data.get("lat"))
         lng = float(data.get("lng"))
-
     except (TypeError, ValueError):
-
         return jsonify({
             "error": "Enter valid latitude and longitude."
         }), 400
 
     if not name:
-
         return jsonify({
             "error": "City name is required."
         }), 400
 
     if not math.isfinite(lat) or not math.isfinite(lng):
-
         return jsonify({
             "error": "Coordinates must be finite numbers."
         }), 400
 
     if not (-90 <= lat <= 90):
-
         return jsonify({
             "error": "Latitude must be between -90 and 90."
         }), 400
 
     if not (-180 <= lng <= 180):
-
         return jsonify({
             "error": "Longitude must be between -180 and 180."
         }), 400
 
     try:
-
         with get_connection() as conn:
-
             conn.execute(
                 """
                 INSERT INTO cities (name, lat, lng)
@@ -333,7 +308,6 @@ def add_city():
         })
 
     except sqlite3.IntegrityError:
-
         return jsonify({
             "error": "This city already exists."
         }), 400
@@ -343,7 +317,6 @@ def add_city():
 
 @app.route("/add_route", methods=["POST"])
 def add_route():
-
     data = request.get_json(silent=True) or {}
 
     source = str(data.get("source", "")).strip()
@@ -353,35 +326,28 @@ def add_route():
 
     try:
         distance = float(data.get("distance"))
-
     except (TypeError, ValueError):
-
         return jsonify({
             "error": "Enter a valid distance."
         }), 400
 
     if not source or not destination:
-
         return jsonify({
             "error": "Select both cities."
         }), 400
 
     if source == destination:
-
         return jsonify({
             "error": "Choose two different cities."
         }), 400
 
     if not math.isfinite(distance) or distance <= 0:
-
         return jsonify({
             "error": "Distance must be greater than zero."
         }), 400
 
     try:
-
         with get_connection() as conn:
-
             city_names = {
                 row["name"]
                 for row in conn.execute(
@@ -393,7 +359,6 @@ def add_route():
                 source not in city_names
                 or destination not in city_names
             ):
-
                 return jsonify({
                     "error": "Both cities must exist."
                 }), 400
@@ -413,7 +378,6 @@ def add_route():
             ).fetchone()[0]
 
             if existing:
-
                 return jsonify({
                     "error": "A route between these cities already exists."
                 }), 400
@@ -436,9 +400,7 @@ def add_route():
         })
 
     except sqlite3.Error:
-
         app.logger.exception("Database error")
-
         return jsonify({
             "error": "Database error while adding route."
         }), 500
@@ -447,8 +409,4 @@ def add_route():
 # ---------------- RUN APPLICATION ----------------
 
 if __name__ == "__main__":
-
-    init_db()
-
     app.run(debug=True)
-
